@@ -1,24 +1,31 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"os"
 
-	"github.com/FabricioCosati/onfly-test/internal/controllers"
-	"github.com/gin-gonic/gin"
+	"github.com/FabricioCosati/onfly-test/internal/config"
+	"github.com/FabricioCosati/onfly-test/internal/di"
+	"github.com/FabricioCosati/onfly-test/internal/routes"
+	_ "github.com/joho/godotenv"
 )
 
 func main() {
-	router := gin.New()
-
-	api := router.Group("/api")
-	{
-		api.POST("/order-service", controllers.CreateOrderService)
-		api.PATCH("/order-service/:id", controllers.UpdateOrderStatus)
-		api.GET("/order-service/:id", controllers.GetOrderService)
-		api.GET("/order-services", controllers.GetOrderServices)
+	config, err := config.InitConfig()
+	if err != nil {
+		log.Fatalf("error on init environment config: %s", err)
+		return
 	}
 
-	if err := router.Run(":8080"); err != nil {
-		fmt.Printf("error on run server: %s", err)
+	app, err := di.InitApplication(config)
+	if err != nil {
+		log.Fatalf("error on init application: %s", err)
+		return
 	}
+
+	routes.InitOrderRoutes(app)
+
+	port := os.Getenv("SERVER_PORT")
+	app.Server.StartServer(port)
+
 }
