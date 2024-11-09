@@ -1,6 +1,8 @@
 services:
   onfly-app:
     restart: always
+    environment:
+      - ENV=local
     build:
       dockerfile: Dockerfile
       context: .
@@ -14,15 +16,16 @@ services:
     restart: always
     environment:
       - MYSQL_DATABASE=onflydb
-      - MYSQL_USER=${MYSQL_USER:-user}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-pass}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_USER=${DB_USER:-user}
+      - MYSQL_PASSWORD=${DB_PASS:-pass}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS:-root}
     ports:
       - 3306:3306
     expose:
       - 3306
     volumes:
       - onflydb:/var/lib/mysql
+      - ./migrations/order.sql:/docker-entrypoint-initdb.d/order.sql
     container_name: onflydb
 volumes:
   onflydb:
