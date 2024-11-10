@@ -10,10 +10,14 @@ const (
 	CANCELED  OrderStatus = "canceled"
 )
 
-type OrderRequest struct {
+type OrderRequestPost struct {
 	RequesterName string        `json:"requester" validate:"required"`
 	Destination   string        `json:"destination" validate:"required"`
-	GoingDate     cval.Datetime `json:"goingDate" validate:"required"`
-	ReturnDate    cval.Datetime `json:"returnDate" validate:"required,gteDate=GoingDate"`
+	GoingDate     cval.Datetime `json:"goingDate" validate:"dateRequired"`
+	ReturnDate    cval.Datetime `json:"returnDate" validate:"dateRequired,gteDate=GoingDate"`
 	Status        string        `json:"status" validate:"required,oneof=requested approved canceled"`
+}
+
+type OrderRequestPatch struct {
+	Status string `json:"status" validate:"required,oneof=approved canceled"`
 }

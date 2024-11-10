@@ -12,8 +12,8 @@ import (
 type OrderController interface {
 	CreateOrderService(ctx *gin.Context)
 	UpdateOrderStatus(ctx *gin.Context)
-	GetOrderService(ctx *gin.Context)
-	GetOrderServices(ctx *gin.Context)
+	GetOrderById(ctx *gin.Context)
+	GetOrders(ctx *gin.Context)
 }
 
 type OrderControllerImpl struct {
@@ -21,10 +21,11 @@ type OrderControllerImpl struct {
 }
 
 func (impl *OrderControllerImpl) CreateOrderService(ctx *gin.Context) {
-	var order dto.OrderRequest
+	var order dto.OrderRequestPost
 
 	if err := ctx.ShouldBindBodyWithJSON(&order); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
 	}
 
 	if err := cval.ValidateRequest(order); err.Errors != nil {
@@ -33,8 +34,8 @@ func (impl *OrderControllerImpl) CreateOrderService(ctx *gin.Context) {
 	}
 
 	response, err := impl.Service.CreateOrderService(ctx, order)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+	if err.Err != nil {
+		ctx.JSON(err.Code, gin.H{"error": err.ErrorMessage()})
 		return
 	}
 
@@ -42,21 +43,45 @@ func (impl *OrderControllerImpl) CreateOrderService(ctx *gin.Context) {
 }
 
 func (impl *OrderControllerImpl) UpdateOrderStatus(ctx *gin.Context) {
-	ctx.JSON(200, gin.H{
-		"Teste": "Success",
-	})
+	var order dto.OrderRequestPatch
+
+	if err := ctx.ShouldBindBodyWithJSON(&order); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	if err := cval.ValidateRequest(order); err.Errors != nil {
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err})
+		return
+	}
+
+	response, err := impl.Service.UpdateOrderStatus(ctx, order)
+	if err.Err != nil {
+		ctx.JSON(err.Code, gin.H{"error": err.ErrorMessage()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, response)
 }
 
-func (impl *OrderControllerImpl) GetOrderService(ctx *gin.Context) {
-	ctx.JSON(200, gin.H{
-		"Teste": "Success",
-	})
+func (impl *OrderControllerImpl) GetOrderById(ctx *gin.Context) {
+	response, err := impl.Service.GetOrderById(ctx)
+	if err.Err != nil {
+		ctx.JSON(err.Code, gin.H{"error": err.ErrorMessage()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, response)
 }
 
-func (impl *OrderControllerImpl) GetOrderServices(ctx *gin.Context) {
-	ctx.JSON(200, gin.H{
-		"Teste": "Success",
-	})
+func (impl *OrderControllerImpl) GetOrders(ctx *gin.Context) {
+	response, err := impl.Service.GetOrders(ctx)
+	if err.Err != nil {
+		ctx.JSON(err.Code, gin.H{"error": err.ErrorMessage()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, response)
 }
 
 func OrderControllerInit(service services.OrderService) *OrderControllerImpl {

@@ -4,6 +4,8 @@ import (
 	"time"
 )
 
+type OrderCollection = []Order
+
 type Order struct {
 	OrderId       int       `gorm:"column:id_order; primary_key; not null"`
 	RequesterName string    `gorm:"column:requester_name_order;"`
