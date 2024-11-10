@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
@@ -21,6 +22,7 @@ type Config struct {
 }
 
 func InitConfig() (Config, error) {
+	time.Local, _ = time.LoadLocation("America/Sao_Paulo")
 	var config Config
 
 	if err := godotenv.Load(env); err != nil {
