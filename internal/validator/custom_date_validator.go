@@ -29,3 +29,12 @@ func GteDate(field validator.FieldLevel) bool {
 
 	return finalDate.After(initDate) || finalDate.Equal(initDate)
 }
+
+func DateRequired(field validator.FieldLevel) bool {
+	date, ok := field.Field().Interface().(Datetime)
+	if !ok {
+		return false
+	}
+
+	return !date.IsZero()
+}

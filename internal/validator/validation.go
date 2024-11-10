@@ -1,6 +1,8 @@
 package validator
 
-import "github.com/go-playground/validator/v10"
+import (
+	"github.com/go-playground/validator/v10"
+)
 
 var validation = validator.New()
 
@@ -9,6 +11,7 @@ type Errors struct {
 }
 
 func init() {
+	validation.RegisterValidation("dateRequired", DateRequired)
 	validation.RegisterValidation("gteDate", GteDate)
 }
 
