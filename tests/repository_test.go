@@ -153,7 +153,7 @@ func TestGetAllOrders(t *testing.T) {
 		)
 
 	orderRep := repository.OrderRepositoryInit(db)
-	ordersResponse, err := orderRep.GetOrders()
+	ordersResponse, err := orderRep.GetOrders("")
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedOrders, ordersResponse)
