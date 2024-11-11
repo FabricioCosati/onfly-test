@@ -11,6 +11,9 @@ services:
     volumes:
       - ./:/app
     container_name: onflyapp
+    depends_on:
+      onfly-db:
+        condition: service_healthy
   onfly-db:
     image: mysql:8.0.40
     restart: always
@@ -27,5 +30,10 @@ services:
       - onflydb:/var/lib/mysql
       - ./migrations/order.sql:/docker-entrypoint-initdb.d/order.sql
     container_name: onflydb
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
 volumes:
   onflydb:
