@@ -13,6 +13,7 @@ type Errors struct {
 func init() {
 	validation.RegisterValidation("dateRequired", DateRequired)
 	validation.RegisterValidation("gteDate", GteDate)
+	validation.RegisterValidation("gtToday", GtToday)
 }
 
 func ValidateRequest(req interface{}) Errors {

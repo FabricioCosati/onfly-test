@@ -13,7 +13,7 @@ const (
 type OrderRequestPost struct {
 	RequesterName string        `json:"requester" validate:"required"`
 	Destination   string        `json:"destination" validate:"required"`
-	GoingDate     cval.Datetime `json:"goingDate" validate:"dateRequired"`
+	GoingDate     cval.Datetime `json:"goingDate" validate:"dateRequired,gtToday"`
 	ReturnDate    cval.Datetime `json:"returnDate" validate:"dateRequired,gteDate=GoingDate"`
 }
 

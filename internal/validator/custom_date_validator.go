@@ -30,6 +30,13 @@ func GteDate(field validator.FieldLevel) bool {
 	return finalDate.After(initDate) || finalDate.Equal(initDate)
 }
 
+func GtToday(field validator.FieldLevel) bool {
+	date := field.Field().Interface().(Datetime).Time
+	now := time.Now().Truncate(24 * time.Hour)
+
+	return date.After(now) || date.Equal(now)
+}
+
 func DateRequired(field validator.FieldLevel) bool {
 	date, ok := field.Field().Interface().(Datetime)
 	if !ok {
