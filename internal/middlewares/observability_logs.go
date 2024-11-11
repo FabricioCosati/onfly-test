@@ -15,8 +15,9 @@ import (
 	otrace "go.opentelemetry.io/otel/trace"
 )
 
-func InitTracerMetrics() (*trace.TracerProvider, error) {
-	file := utils.GetFileToSave("observability")
+func InitTracerMetrics(fileName string) (*trace.TracerProvider, error) {
+	utils.CreateFolderIfNotExists()
+	file := utils.GetFileToSave(fileName)
 
 	exp, err := stdouttrace.New(stdouttrace.WithWriter(file))
 	if err != nil {

@@ -10,10 +10,6 @@ import (
 
 func GetFileToSave(logName string) *os.File {
 	logsDir := os.Getenv("LOGS_DIR")
-	if _, err := os.Stat(logsDir); os.IsNotExist(err) {
-		os.Mkdir(logsDir, 0755)
-	}
-
 	now := time.Now()
 	date := now.Format("2006_01_02")
 	name := fmt.Sprintf("%s/%s_log_%s.log", logsDir, logName, date)
@@ -25,6 +21,13 @@ func GetFileToSave(logName string) *os.File {
 	}
 
 	return f
+}
+
+func CreateFolderIfNotExists() {
+	logsDir := os.Getenv("LOGS_DIR")
+	if _, err := os.Stat(logsDir); os.IsNotExist(err) {
+		os.Mkdir(logsDir, 0755)
+	}
 }
 
 func CreateIfNotExists(name string) error {

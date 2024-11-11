@@ -23,7 +23,7 @@ func main() {
 		log.Fatalf("error on init application: %s", err)
 	}
 
-	tp, err := middlewares.InitTracerMetrics()
+	tp, err := middlewares.InitTracerMetrics("observability")
 	if err != nil {
 		log.Fatalf("error on init application: %s", err)
 	}

@@ -7,7 +7,7 @@ args_bin = []
 bin = "tmp/server"
 cmd = "go build -o tmp/server -buildvcs=false ./cmd/server"
 delay = 1000
-exclude_dir = ["logs", "vendor", "tests"]
+exclude_dir = ["logs", "vendor", "tests", "assets"]
 exclude_file = []
 exclude_regex = ["_test.go"]
 exclude_unchanged = false

@@ -21,7 +21,7 @@ func (cw CustomWriter) Write(b []byte) (int, error) {
 	return cw.ResponseWriter.Write(b)
 }
 
-func OperationLogs() gin.HandlerFunc {
+func OperationLogs(fileName string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		body := getRequestBody(ctx)
 		writer := &CustomWriter{
@@ -31,7 +31,8 @@ func OperationLogs() gin.HandlerFunc {
 		ctx.Writer = writer
 		ctx.Next()
 
-		file := utils.GetFileToSave("operation")
+		utils.CreateFolderIfNotExists()
+		file := utils.GetFileToSave(fileName)
 		defer file.Close()
 
 		logger := slog.New(slog.NewJSONHandler(io.MultiWriter(file), nil))
@@ -48,6 +49,10 @@ func OperationLogs() gin.HandlerFunc {
 }
 
 func getRequestBody(ctx *gin.Context) string {
+	if ctx.Request.Method == "GET" {
+		return ""
+	}
+
 	body, err := ctx.GetRawData()
 	if err != nil {
 		log.Fatalf("error on get request data: %s", err)
