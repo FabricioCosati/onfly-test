@@ -76,6 +76,8 @@ O projeto possui testes unitários da **Repository** para verificar se as opera�
 
 Há também o teste do **Middleware** de logs, neste caso o do log de operações, onde o middleware pega as informações da requisição e salva em uma pasta para futuras análises. Este teste verifica se o LOG foi salvo corretamente na pasta e se os atributos estão corretos.
 
+Por fim tem os testes da **Controller** onde uma série de verificações é realizada, como ao criar um pedido de viajem por exemplo, o teste engloba tanto o caso de sucesso ao retornar 201 com o objeto na API, quanto o caso de erro, como o de validação, neste caso retornando erro 422 pela API. Há testes da controller para os 4 endpoints do projeto.
+
 Para rodar os testes apenas digite no terminal
 
 ```bash
