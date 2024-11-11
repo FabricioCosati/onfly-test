@@ -30,7 +30,7 @@ func getDatabaseMock(t *testing.T) (*gorm.DB, sqlmock.Sqlmock) {
 	return gorm, mock
 }
 
-func TestPostOrder(t *testing.T) {
+func TestPostRepository(t *testing.T) {
 	db, mock := getDatabaseMock(t)
 	conn, err := db.DB()
 	if err != nil {
@@ -69,7 +69,7 @@ func TestPostOrder(t *testing.T) {
 	assert.Equal(t, expectedOrder, orderResponse)
 }
 
-func TestPatchOrder(t *testing.T) {
+func TestPatchRepository(t *testing.T) {
 	db, mock := getDatabaseMock(t)
 	conn, err := db.DB()
 	if err != nil {
@@ -104,7 +104,7 @@ func TestPatchOrder(t *testing.T) {
 	assert.Equal(t, expectedOrder, orderResponse)
 }
 
-func TestGetByIdOrder(t *testing.T) {
+func TestGetByIdRepository(t *testing.T) {
 	db, mock := getDatabaseMock(t)
 	conn, err := db.DB()
 	if err != nil {
@@ -134,7 +134,7 @@ func TestGetByIdOrder(t *testing.T) {
 	}
 }
 
-func TestGetAllOrders(t *testing.T) {
+func TestGetAllRepository(t *testing.T) {
 	db, mock := getDatabaseMock(t)
 	conn, err := db.DB()
 	if err != nil {

@@ -27,6 +27,8 @@ type LogTest struct {
 }
 
 func TestOperationLogsSuccess(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
 	os.Setenv("LOGS_DIR", "logs_test")
 	defer os.RemoveAll("logs_test")
 
