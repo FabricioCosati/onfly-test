@@ -4,7 +4,6 @@
 Este é um microserviço feito em GO utilizando as tecnologias:
 * **[Gin Framework](https://github.com/gin-gonic/gin)** para montar a aplicação REST
 * **[MySQL](https://www.mysql.com/)** como banco de dados da aplicação
-* **[GORM](https://gorm.io/)** como ORM para manipular os dados do banco
 * **[Docker](https://www.docker.com/)** para montar os containers da aplicação
 * **[OpenTelemetry](https://opentelemetry.io/docs/languages/go/)** para montar os logs de observabilidade da aplicação
 
@@ -108,6 +107,28 @@ O microserviço possui 4 endpoints como foi solicitado na descrição da tarefa
 
 **GET - /api/order-services?status={status}**
 ![GET ALL](./assets/imgs/get_all.jpg)
+
+
+Exemplo do corpo da requisição **POST**:
+
+```json
+{
+  "requester": "Light Yagami",
+  "destination": "Tóquio, Japão",
+  "goingDate": "2024-12-22",
+  "returnDate": "2025-01-20"
+}
+```
+
+No caso do POST o ID é automaticamente gerado e o status por padrão será "requested" para não ter o risco de criar um pedido de viajem que já venha aprovado ou cancelado.
+
+Exemplo do corpo da requisição **PATCH**:
+
+```json
+{
+  "status": "approved"
+}
+```
 
 Também estarei disponibilizando a collection do postman e a variável de ambiente, para facilitar na hora das requisições!
 
