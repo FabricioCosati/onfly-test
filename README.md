@@ -35,19 +35,12 @@ ONFLY_DB_NAME=onflydb
 ```
 
 O **LOGS_DIR** será a pasta que ficará os logs de operação e observabilidade, nesse caso terá uma pasta logs na raiz do projeto
-
 O **TIME_ZONE** será a data padrão do sistema, neste caso utilizando o horário de São Paulo
-
 O **SERVER_PORT** será o será a porta para rodar o servidor da aplicação (Porta padrão do server, verifique se está disponível para que a aplicação rode sem problemas)
-
 O **ONFLY_DB_USER** será o usuário do banco de dados
-
 O **ONFLY_DB_PASS** será a senha do banco de dados
-
 O **ONFLY_DB_HOST** será o host do banco de dados, nesse caso vamos utilizar o host da imagem do docker que será criada
-
 O **ONFLY_DB_PORT** será a porta do banco de dados (Porta padrão do banco, verifique se está disponível para que a aplicação rode sem problemas)
-
 O **ONFLY_DB_NAME** será o nome do banco de dados que vamos utilizar
 
 **Executando o Docker**
