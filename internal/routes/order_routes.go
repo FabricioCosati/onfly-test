@@ -11,7 +11,7 @@ func InitOrderRoutes(app *di.AppInit) {
 
 	api := app.Server.Engine.Group("/api")
 	{
-		api.Use(middlewares.OperationLogs())
+		api.Use(middlewares.OperationLogs("operation"))
 		api.Use(otelgin.Middleware("onfly-orders"))
 		api.Use(middlewares.OtelMiddleware())
 

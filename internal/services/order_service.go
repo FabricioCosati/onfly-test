@@ -16,7 +16,7 @@ type OrderService interface {
 	CreateOrderService(ctx *gin.Context, order dto.OrderRequestPost) (dao.Order, ce.CustomError)
 	UpdateOrderStatus(ctx *gin.Context, order dto.OrderRequestPatch) (dao.Order, ce.CustomError)
 	GetOrderById(ctx *gin.Context) (dao.Order, ce.CustomError)
-	GetOrders(ctx *gin.Context) (dao.OrderCollection, ce.CustomError)
+	GetOrders(ctx *gin.Context, status string) (dao.OrderCollection, ce.CustomError)
 }
 
 type OrderServiceImpl struct {
@@ -29,7 +29,7 @@ func (impl *OrderServiceImpl) CreateOrderService(ctx *gin.Context, orderRequest 
 		Destination:   orderRequest.Destination,
 		GoingDate:     orderRequest.GoingDate.Time,
 		ReturnDate:    orderRequest.ReturnDate.Time,
-		Status:        orderRequest.Status,
+		Status:        "requested",
 	}
 
 	order, err := impl.OrderRepository.CreateOrder(&order)
@@ -83,8 +83,8 @@ func (impl *OrderServiceImpl) GetOrderById(ctx *gin.Context) (dao.Order, ce.Cust
 	return order, ce.CustomError{}
 }
 
-func (impl *OrderServiceImpl) GetOrders(ctx *gin.Context) (dao.OrderCollection, ce.CustomError) {
-	orders, err := impl.OrderRepository.GetOrders()
+func (impl *OrderServiceImpl) GetOrders(ctx *gin.Context, status string) (dao.OrderCollection, ce.CustomError) {
+	orders, err := impl.OrderRepository.GetOrders(status)
 
 	if err != nil {
 		return orders, *ce.InternalServerError()

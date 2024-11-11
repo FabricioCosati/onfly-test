@@ -15,7 +15,6 @@ type OrderRequestPost struct {
 	Destination   string        `json:"destination" validate:"required"`
 	GoingDate     cval.Datetime `json:"goingDate" validate:"dateRequired"`
 	ReturnDate    cval.Datetime `json:"returnDate" validate:"dateRequired,gteDate=GoingDate"`
-	Status        string        `json:"status" validate:"required,oneof=requested approved canceled"`
 }
 
 type OrderRequestPatch struct {

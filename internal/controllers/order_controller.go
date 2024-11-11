@@ -75,7 +75,8 @@ func (impl *OrderControllerImpl) GetOrderById(ctx *gin.Context) {
 }
 
 func (impl *OrderControllerImpl) GetOrders(ctx *gin.Context) {
-	response, err := impl.Service.GetOrders(ctx)
+	status := ctx.Query("status")
+	response, err := impl.Service.GetOrders(ctx, status)
 	if err.Err != nil {
 		ctx.JSON(err.Code, gin.H{"error": err.ErrorMessage()})
 		return

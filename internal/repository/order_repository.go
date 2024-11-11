@@ -9,7 +9,7 @@ type OrderRepository interface {
 	CreateOrder(order *dao.Order) (dao.Order, error)
 	UpdateStatusOrder(order *dao.Order, orderId int) (dao.Order, error)
 	GetOrderById(orderId int) (dao.Order, error)
-	GetOrders() (dao.OrderCollection, error)
+	GetOrders(status string) (dao.OrderCollection, error)
 }
 
 type OrderRepositoryImpl struct {
@@ -52,10 +52,16 @@ func (impl *OrderRepositoryImpl) GetOrderById(orderId int) (dao.Order, error) {
 	return order, nil
 }
 
-func (impl *OrderRepositoryImpl) GetOrders() (dao.OrderCollection, error) {
+func (impl *OrderRepositoryImpl) GetOrders(status string) (dao.OrderCollection, error) {
 	var orders dao.OrderCollection
 
-	if err := impl.Database.Find(&orders).Error; err != nil {
+	query := impl.Database.Model(orders)
+
+	if status != "" {
+		query = query.Where(&dao.Order{Status: status})
+	}
+
+	if err := query.Find(&orders).Error; err != nil {
 		return orders, err
 	}
 
