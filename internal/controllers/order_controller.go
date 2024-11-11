@@ -51,7 +51,7 @@ func (impl *OrderControllerImpl) UpdateOrderStatus(ctx *gin.Context) {
 	}
 
 	if err := cval.ValidateRequest(order); err.Errors != nil {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err})
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Errors})
 		return
 	}
 
