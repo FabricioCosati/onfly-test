@@ -4,6 +4,7 @@
 Este é um microserviço feito em GO utilizando as tecnologias:
 * **[Gin Framework](https://github.com/gin-gonic/gin)** para montar a aplicação REST
 * **[MySQL](https://www.mysql.com/)** como banco de dados da aplicação
+* **[GORM](https://gorm.io/)** como ORM para manipular os dados do banco
 * **[Docker](https://www.docker.com/)** para montar os containers da aplicação
 * **[OpenTelemetry](https://opentelemetry.io/docs/languages/go/)** para montar os logs de observabilidade da aplicação
 
